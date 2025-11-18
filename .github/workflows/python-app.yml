@@ -32,7 +32,9 @@ jobs:
       run: |
         echo "writing creds"
         echo $GOOGLE_SHEET_SERVICE_ACCOUNT >> creds.json
-        export GOOGLE_APPLICATION_CREDENTIALS=creds.json
     - name: run
       run: |
         python3 src/main.py
+      env:
+        SHEET_ID: ${{ vars.SHEET_ID }}
+        GOOGLE_APPLICATION_CREDENTIALS: ../creds.json
