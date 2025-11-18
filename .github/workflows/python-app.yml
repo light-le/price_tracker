@@ -28,13 +28,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Prepare credentials
-      run: |
-        echo "writing creds"
-        echo $GOOGLE_SHEET_SERVICE_ACCOUNT >> creds.json
     - name: run
       run: |
+        echo $GOOGLE_SHEET_SERVICE_ACCOUNT >> creds.json
         python3 src/main.py
       env:
         SHEET_ID: ${{ vars.SHEET_ID }}
-        GOOGLE_APPLICATION_CREDENTIALS: ../creds.json
+        GOOGLE_APPLICATION_CREDENTIALS: creds.json
