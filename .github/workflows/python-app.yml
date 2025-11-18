@@ -4,9 +4,10 @@
 name: Python application
 
 on:
-  push:
-    branches: [ "main" ]
-
+  schedule:
+    - cron: "0 11/12 * * *" # every 12 hours starting from 11:00am UTC
+  workflow_dispatch:
+    
 permissions:
   contents: read
 
@@ -14,6 +15,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_SHEET_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SHEET_SERVICE_ACCOUNT }}
 
     steps:
     - uses: actions/checkout@v4
@@ -28,6 +31,8 @@ jobs:
     - name: Prepare credentials
       run: |
         echo "writing creds"
+        echo $GOOGLE_SHEET_SERVICE_ACCOUNT >> creds.json
+        export GOOGLE_APPLICATION_CREDENTIALS=creds.json
     - name: run
       run: |
         python3 src/main.py
