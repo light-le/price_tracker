@@ -9,7 +9,7 @@ import google.auth
 from googleapiclient.discovery import build
 import requests
 
-SHEET_ID = '18Cfsh2h73XqfyE2b-TnpyVVp0IDc3cV-H7ux964OXTg'
+SHEET_ID = environ['SHEET_ID']
 
 def read_sheet(sheet_id: str, sheet_range: str) -> list[list]:
     creds, _ = google.auth.default()
